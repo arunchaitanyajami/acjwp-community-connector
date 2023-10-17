@@ -21,7 +21,11 @@ jobs:
           name: Install production dependencies
           command: |
             composer validate
-            composer install --prefer-dist
+            composer install --no-dev -o
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
   php_lint:
     docker:
       - image: cimg/php:8.1-node
