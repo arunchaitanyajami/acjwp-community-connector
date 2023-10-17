@@ -83,10 +83,7 @@ class ResponseParser {
 			if ( is_array( $value ) ) {
 				$result = array_merge( $result, $this->convert_keys_to_strings( (array) $value, $new_key ) );
 			} else {
-				$updated_key = str_replace( '.', ' ', $new_key );
-				$updated_key = str_replace( '-', ' ', $updated_key );
-				$updated_key = str_replace( '_', ' ', $updated_key );
-				$result[ $this->convert_key_to_title( $updated_key ) ] = $this->validate_value( $value );
+				$result[ $this->convert_key_to_title( $new_key ) ] = $this->validate_value( $value );
 			}
 		}
 
@@ -102,15 +99,17 @@ class ResponseParser {
 	 */
 	private function convert_key_to_title( string $key ): string {
 		$inline_convert = $this->request->get_param( 'convert' );
+		$updated_key    = str_replace( '/', ' ', $key );
+		$updated_key    = str_replace( '_', ' ', $updated_key );
+
 		if ( $inline_convert ) {
-			$updated_key = str_replace( '/', ' ', $key );
 			$updated_key = str_replace( '.', ' ', $updated_key );
 			$updated_key = str_replace( '-', ' ', $updated_key );
-
-			return trim( ucwords( str_replace( '_', ' ', $updated_key ) ) );
+			$updated_key = str_replace( ':', ' ', $updated_key );
+			$updated_key = ucwords( str_replace( '_', ' ', $updated_key ) );
 		}
 
-		return trim( str_replace( ' ', '.', $key ) );
+		return trim( $updated_key );
 	}
 
 	/**
