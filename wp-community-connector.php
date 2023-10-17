@@ -39,6 +39,7 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	include __DIR__ . '/vendor/autoload.php';
 }
 
+use Acj\Wpcc\Admin\Menu;
 use Acj\Wpcc\ResponseParser as ResponseConverter;
 
 /**
@@ -67,3 +68,8 @@ add_filter(
 	10,
 	3
 );
+
+/**
+ * Initiate the menu here.
+ */
+( new Menu() )->init();
