@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/php:8.0-node
+      - image: cimg/php:8.1-node
     steps:
       - checkout
       - run:
@@ -24,7 +24,7 @@ jobs:
             composer install --prefer-dist
   php_lint:
     docker:
-      - image: cimg/php:8.0-node
+      - image: cimg/php:8.1-node
     steps:
       - checkout
       - run:
@@ -47,7 +47,7 @@ jobs:
           command: composer run lint:phpcs
   php_unit_integration:
     docker:
-      - image: cimg/php:8.0-node
+      - image: cimg/php:8.1-node
       - image: cimg/mysql:5.7
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
@@ -74,7 +74,7 @@ jobs:
           command: ./vendor/bin/phpunit --testsuite=integration
   php_unit_default:
     docker:
-      - image: cimg/php:8.0-node
+      - image: cimg/php:8.1-node
     steps:
       - checkout
       - run:
