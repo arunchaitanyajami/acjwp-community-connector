@@ -164,7 +164,7 @@ class ResponseParser {
 	 * @return mixed
 	 */
 	private function validate_value( mixed $value, string $key = '' ): mixed {
-		$inline_data = $this->request->get_param( 'inline_data' );
+			$inline_data = $this->request->get_param( 'inline_data' );
 		if ( ! $inline_data ) {
 			return strtotime( $value ) !== false ? strtotime( $value ) : $value;
 		}

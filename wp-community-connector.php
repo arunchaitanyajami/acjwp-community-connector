@@ -41,6 +41,7 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 
 use Acj\Wpcc\Admin\Menu;
 use Acj\Wpcc\ResponseParser as ResponseConverter;
+use Acj\Wpcc\RestApi\Route;
 
 /**
  * Generate a report endpoint.
@@ -73,3 +74,8 @@ add_filter(
  * Initiate the menu here.
  */
 ( new Menu() )->init();
+
+/**
+ * Register Rest.
+ */
+( new Route() )->init();
