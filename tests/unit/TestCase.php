@@ -1,5 +1,5 @@
 <?php
-namespace Acj\Tests\unit;
+namespace Acj\Wpcc\Tests\unit;
 
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acj\Tests\integration;
+namespace Acj\Wpcc\Tests\integration;
 
 use WP_UnitTestCase;
 

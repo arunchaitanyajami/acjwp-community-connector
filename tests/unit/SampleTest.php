@@ -6,7 +6,7 @@
  * @since   0.1.0
  */
 
-namespace Acj\Tests\unit;
+namespace Acj\Wpcc\Tests\unit;
 
 /**
  * Functions test class.

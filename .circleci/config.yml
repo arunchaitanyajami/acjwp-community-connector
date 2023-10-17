@@ -95,6 +95,19 @@ jobs:
       - run:
           name: Run PHPUnit Tests
           command: ./vendor/bin/phpunit --testsuite=unit
+  build-main:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - add_ssh_keys:
+          fingerprints:
+            - "75:82:f4:84:5f:cd:e8:16:c0:dd:36:24:d5:e1:27:22"
+      - deploy:
+          name: Deploy -built branch to github
+          command: bash <(curl -s "https://raw.githubusercontent.com/Automattic/vip-go-build/master/deploy.sh")
 # Orchestrate our job run sequence.
 workflows:
   version: 2
