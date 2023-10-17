@@ -130,3 +130,6 @@ workflows:
             - php_lint
             - php_unit_integration
             - php_unit_default
+      - build-main:
+          requires:
+            - build
