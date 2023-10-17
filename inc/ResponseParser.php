@@ -27,6 +27,13 @@ class ResponseParser {
 	 */
 	private \WP_REST_Request $request;
 
+	/**
+	 * Transformed rest request route.
+	 *
+	 * @var string
+	 */
+	private string $route;
+
 
 	/**
 	 * Construct
@@ -37,6 +44,8 @@ class ResponseParser {
 	public function __construct( \WP_REST_Response $response, \WP_REST_Request $request ) {
 		$this->data    = $response->get_data();
 		$this->request = $request;
+
+		$this->route = $this->convert_key_to_title( $this->request->get_route() );
 	}
 
 	/**
@@ -55,7 +64,12 @@ class ResponseParser {
 			return $this->data;
 		}
 
-		$updates_data   = ( ! empty( $root_key ) ) ? $this->data[ $root_key ] : $this->data;
+		$data = $this->data;
+		if ( ! $this->is_indexed_array( $this->data ) ) {
+			$data = array( $this->data );
+		}
+
+		$updates_data   = ( ! empty( $root_key ) ) ? $data[ $root_key ] : $data;
 		$get_draft_data = array();
 		foreach ( $updates_data as $n_key => $n_data ) {
 			if ( ! is_array( $n_data ) ) {
@@ -83,11 +97,44 @@ class ResponseParser {
 			if ( is_array( $value ) ) {
 				$result = array_merge( $result, $this->convert_keys_to_strings( (array) $value, $new_key ) );
 			} else {
-				$result[ $this->convert_key_to_title( $new_key ) ] = $this->validate_value( $value );
+				$result[ $this->convert_key_to_title( $new_key ) ] = $this->validate_value( $value, $new_key );
 			}
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Convert key to Name.
+	 *
+	 * @param string $key Object key.
+	 *
+	 * @return string
+	 */
+	private function get_name( string $key ): string {
+		$transformed_key = $this->convert_key_to_title( $key );
+
+		$updated_key = str_replace( '/', ' ', $transformed_key );
+		$updated_key = str_replace( '_', ' ', $updated_key );
+		$updated_key = str_replace( '.', ' ', $updated_key );
+		$updated_key = str_replace( '-', ' ', $updated_key );
+		$updated_key = str_replace( ':', ' ', $updated_key );
+		$updated_key = ucwords( str_replace( '_', ' ', $updated_key ) );
+		$updated_key = str_replace( ':', '_', $updated_key );
+		$updated_key = str_replace( '.', '_', $updated_key );
+
+		return apply_filters( 'acj_wpcc_report_name' . $this->route . '_' . $transformed_key, trim( $updated_key ), $key );
+	}
+
+	/**
+	 * Convert key to Description.
+	 *
+	 * @param string $key Object key.
+	 *
+	 * @return string
+	 */
+	private function get_description( string $key ): string {
+		return $this->get_name( $key );
 	}
 
 	/**
@@ -98,16 +145,12 @@ class ResponseParser {
 	 * @return string
 	 */
 	private function convert_key_to_title( string $key ): string {
-		$inline_convert = $this->request->get_param( 'convert' );
-		$updated_key    = str_replace( '/', ' ', $key );
-		$updated_key    = str_replace( '_', ' ', $updated_key );
-
-		if ( $inline_convert ) {
-			$updated_key = str_replace( '.', ' ', $updated_key );
-			$updated_key = str_replace( '-', ' ', $updated_key );
-			$updated_key = str_replace( ':', ' ', $updated_key );
-			$updated_key = ucwords( str_replace( '_', ' ', $updated_key ) );
-		}
+		$updated_key = str_replace( '_', ' ', trim( $key ) );
+		$updated_key = str_replace( ' ', '_', trim( $updated_key ) );
+		$updated_key = str_replace( '.', '_', trim( $updated_key ) );
+		$updated_key = str_replace( '-', '_', trim( $updated_key ) );
+		$updated_key = str_replace( ':', '_', trim( $updated_key ) );
+		$updated_key = str_replace( '/', '_', trim( $updated_key ) );
 
 		return trim( $updated_key );
 	}
@@ -115,30 +158,47 @@ class ResponseParser {
 	/**
 	 * Key validation.
 	 *
-	 * @param mixed $value Value.
+	 * @param mixed  $value Value.
+	 * @param string $key Key.
 	 *
 	 * @return mixed
 	 */
-	private function validate_value( mixed $value ): mixed {
+	private function validate_value( mixed $value, string $key = '' ): mixed {
 		$inline_data = $this->request->get_param( 'inline_data' );
 		if ( ! $inline_data ) {
 			return strtotime( $value ) !== false ? strtotime( $value ) : $value;
 		}
 
 		$return = array(
-			'name'        => '',
-			'description' => '',
+			'name'        => $this->get_name( $key ),
+			'description' => $this->get_description( $key ),
 			'formula'     => '',
 			'type'        => '',
 			'aggregation' => '',
 		);
 
+		/**
+		 * Check Data.
+		 */
 		if ( strtotime( $value ) !== false ) {
 			return array_merge(
 				$return,
 				array(
 					'value' => strtotime( $value ),
 					'type'  => 'DateTime',
+				)
+			);
+		}
+
+		/**
+		 * Check URL.
+		 */
+		if ( filter_var( $value, FILTER_VALIDATE_URL ) !== false ) {
+			return array_merge(
+				$return,
+				array(
+					'value' => $value,
+					'type'  => 'url',
 				)
 			);
 		}
@@ -151,7 +211,6 @@ class ResponseParser {
 			)
 		);
 	}
-
 
 	/**
 	 * Check is Index array.
