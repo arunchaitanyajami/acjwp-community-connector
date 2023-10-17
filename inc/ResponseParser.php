@@ -184,7 +184,7 @@ class ResponseParser {
 			return array_merge(
 				$return,
 				array(
-					'value' => strtotime( $value ),
+					'value' => $value,
 					'type'  => 'DateTime',
 				)
 			);
@@ -194,6 +194,16 @@ class ResponseParser {
 		 * Check URL.
 		 */
 		if ( filter_var( $value, FILTER_VALIDATE_URL ) !== false ) {
+			if ( $this->is_image_url( $value ) ) {
+				return array_merge(
+					$return,
+					array(
+						'value' => $value,
+						'type'  => 'image',
+					)
+				);
+			}
+
 			return array_merge(
 				$return,
 				array(
@@ -244,6 +254,36 @@ class ResponseParser {
 			if ( ! is_int( $key ) ) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if it is a URL.
+	 *
+	 * @param string $url URl.
+	 *
+	 * @return bool
+	 */
+	private function is_image_url( string $url ): bool {
+		if ( filter_var( $url, FILTER_VALIDATE_URL ) === false ) {
+			return false;
+		}
+
+		$response = wp_safe_remote_request( $url );
+
+		// Check if the response was successful.
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		// Get the content type from the response headers.
+		$content_type = wp_remote_retrieve_header( $response, 'content-type' );
+
+		// Check if the content type indicates an image.
+		if ( str_starts_with( $content_type, 'image/' ) ) {
+			return true;
 		}
 
 		return false;
