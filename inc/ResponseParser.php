@@ -103,7 +103,8 @@ class ResponseParser {
 	private function convert_key_to_title( string $key ): string {
 		$inline_convert = $this->request->get_param( 'convert' );
 		if ( $inline_convert ) {
-			$updated_key = str_replace( '.', ' ', $key );
+			$updated_key = str_replace( '/', ' ', $key );
+			$updated_key = str_replace( '.', ' ', $updated_key );
 			$updated_key = str_replace( '-', ' ', $updated_key );
 
 			return trim( ucwords( str_replace( '_', ' ', $updated_key ) ) );
