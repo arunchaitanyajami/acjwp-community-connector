@@ -125,16 +125,30 @@ class ResponseParser {
 			return strtotime( $value ) !== false ? strtotime( $value ) : $value;
 		}
 
+		$return = array(
+			'name'        => '',
+			'description' => '',
+			'formula'     => '',
+			'type'        => '',
+			'aggregation' => '',
+		);
+
 		if ( strtotime( $value ) !== false ) {
-			return array(
-				'value' => strtotime( $value ),
-				'type'  => 'DateTime',
+			return array_merge(
+				$return,
+				array(
+					'value' => strtotime( $value ),
+					'type'  => 'DateTime',
+				)
 			);
 		}
 
-		return array(
-			'value' => $value,
-			'type'  => getType( $value ),
+		return array_merge(
+			$return,
+			array(
+				'value' => $value,
+				'type'  => getType( $value ),
+			)
 		);
 	}
 
