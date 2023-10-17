@@ -59,12 +59,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Acj\\": "inc/"
+      "Acj\\Wpcc\\": "inc/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Acj\\Tests\\": "tests/"
+      "Acj\\Wpcc\\Tests\\": "tests/"
     }
   },
   "config": {
