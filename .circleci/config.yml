@@ -22,10 +22,16 @@ jobs:
           command: |
             composer validate
             composer install --no-dev -o
+      - run:
+        name: Node Dependency
+        command: |
+          npm install
+          npm run build
       - persist_to_workspace:
           root: .
           paths:
             - vendor
+            - build
   php_lint:
     docker:
       - image: cimg/php:8.1-node

@@ -70,6 +70,10 @@ class Route {
 						continue;
 					}
 
+					if ( $route === '/' ) {
+						continue;
+					}
+
 					$list[] = $route;
 				}
 			}

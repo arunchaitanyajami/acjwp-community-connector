@@ -60,4 +60,5 @@
 	<exclude-pattern>/build/*</exclude-pattern>
 	<exclude-pattern>/cypress/*</exclude-pattern>
 	<exclude-pattern>wp-cypress-config.php</exclude-pattern>
+	<exclude-pattern>src/</exclude-pattern>
 </ruleset>

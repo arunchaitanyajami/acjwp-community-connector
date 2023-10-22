@@ -64,6 +64,10 @@ add_filter(
 add_filter(
 	'rest_request_after_callbacks',
 	function ( $response, $handler, $request ) {
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
 		return ( new ResponseConverter( $response, $request ) )->init();
 	},
 	10,
@@ -79,3 +83,32 @@ add_filter(
  * Register Rest.
  */
 ( new Route() )->init();
+
+/**
+ * Enqueue scripts.
+ *
+ * @return void
+ */
+function acj_enqueue_scripts(): void {
+	$current_screen = get_current_screen();
+	if ( $current_screen->base !== 'toplevel_page_WPCC' ) {
+		return;
+	}
+
+	$block_settings = array(
+		'ajaxUrl' => esc_url( admin_url( 'admin-ajax.php', 'relative' ) ),
+	);
+
+	/**
+	 * Add inline script for live blog and live blog entry.
+	 */
+	$asset_file = include ACJ_WPCC_DIR_PATH . 'build/index.asset.php';
+	wp_register_script( 'acj_menu_assets-js', ACJ_WPCC_DIR_URL . 'build/index.js', $asset_file['dependencies'], ACJ_WPCC_PLUGIN_VERSION, true );
+	wp_localize_script( 'acj_menu_assets-js', 'HhReferralBlocksEditorSettings', $block_settings );
+	wp_enqueue_script( 'acj_menu_assets-js' );
+	wp_enqueue_style( 'acj_menu_assets-global-css', ACJ_WPCC_DIR_URL . 'build/index.css', ACJ_WPCC_PLUGIN_VERSION );
+}
+
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\acj_enqueue_scripts' );
+
+
