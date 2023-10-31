@@ -68,6 +68,10 @@ add_filter(
 			return $response;
 		}
 
+		if ( is_array( $response ) ) {
+			$response = new \WP_REST_Response( $response );
+		}
+
 		return ( new ResponseConverter( $response, $request ) )->init();
 	},
 	10,

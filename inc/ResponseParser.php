@@ -34,12 +34,19 @@ class ResponseParser {
 	 */
 	private string $route;
 
+	/**
+	 * Response cache time.
+	 *
+	 * @var int
+	 */
+	private int $cache_time = MINUTE_IN_SECONDS;
+
 
 	/**
 	 * Construct
 	 *
 	 * @param \WP_REST_Response $response The response object.
-	 * @param \WP_REST_Request  $request Request object.
+	 * @param \WP_REST_Request $request Request object.
 	 */
 	public function __construct( \WP_REST_Response $response, \WP_REST_Request $request ) {
 		$this->data    = $response->get_data();
@@ -64,6 +71,13 @@ class ResponseParser {
 			return $this->data;
 		}
 
+		$url         = add_query_arg( $this->request->get_params(), $this->request->get_route() );
+		$cache_key   = $this->string_md5( $url );
+		$cached_data = get_transient( $cache_key );
+		if ( $cached_data ) {
+			return $cached_data;
+		}
+
 		$data = $this->data;
 		if ( ! $this->is_indexed_array( $this->data ) ) {
 			$data = array( $this->data );
@@ -79,29 +93,68 @@ class ResponseParser {
 			}
 		}
 
-		if ( ! $this->is_indexed_array( $this->data ) ) {
-				return $get_draft_data[0];
+		if ( $this->request->get_param( 'skeleton' ) ) {
+			$skeleton_data = $this->fetch_skeleton( $get_draft_data );
+			set_transient( $cache_key, $skeleton_data, $this->cache_time );
+
+			return $skeleton_data;
 		}
 
+		if ( ! $this->is_indexed_array( $this->data ) ) {
+			set_transient( $cache_key, $get_draft_data[0], $this->cache_time );
+
+			return $get_draft_data[0];
+		}
+
+		set_transient( $cache_key, $get_draft_data, $this->cache_time );
+
 		return $get_draft_data;
+	}
+
+	public function string_md5( string $string ): string {
+		return md5( $string );
+	}
+
+	/**
+	 * Get all keys from the WP route.
+	 *
+	 * @param array $data
+	 * @param array $response
+	 *
+	 * @return array
+	 */
+	private function fetch_skeleton( array $data, array &$response = [] ): array {
+		$inline_data = $this->request->get_param( 'skeleton_type' ) ?? false;
+		foreach ( $data as $n_key => $n_data ) {
+			if ( is_array( $n_data ) ) {
+				$this->fetch_skeleton( $n_data, $response );
+			} elseif ( ! is_numeric( $n_key ) && ! $inline_data ) {
+				$response[] = $n_key;
+			} elseif ( ! is_numeric( $n_key ) && $inline_data ) {
+				$response[ $n_key ] = $this->validate_value( $n_data, $n_key, $inline_data );
+			}
+		}
+
+		return $response;
 	}
 
 	/**
 	 * Converted data.
 	 *
-	 * @param array  $data Data Set.
+	 * @param array $data Data Set.
 	 * @param string $prefix Data Prefix.
 	 *
 	 * @return array
 	 */
 	private function convert_keys_to_strings( array $data, string $prefix = '' ): array {
-		$result = array();
+		$inline_edit = $this->request->get_param( 'inline_edit' ) ?? false;
+		$result      = array();
 		foreach ( $data as $key => $value ) {
 			$new_key = $prefix . ( $prefix ? '.' : '' ) . $key;
 			if ( is_array( $value ) ) {
 				$result = array_merge( $result, $this->convert_keys_to_strings( (array) $value, $new_key ) );
 			} else {
-				$result[ $this->convert_key_to_title( $new_key ) ] = $this->validate_value( $value, $new_key );
+				$result[ $this->convert_key_to_title( $new_key ) ] = $this->validate_value( $value, $new_key, $inline_edit );
 			}
 		}
 
@@ -162,14 +215,14 @@ class ResponseParser {
 	/**
 	 * Key validation.
 	 *
-	 * @param mixed  $value Value.
+	 * @param mixed $value Value.
 	 * @param string $key Key.
+	 * @param bool $process Convert values.
 	 *
 	 * @return mixed
 	 */
-	private function validate_value( mixed $value, string $key = '' ): mixed {
-				$inline_data = $this->request->get_param( 'inline_data' );
-		if ( ! $inline_data ) {
+	private function validate_value( mixed $value, string $key = '', bool $process = false ): mixed {
+		if ( ! $process ) {
 			return strtotime( $value ) !== false ? strtotime( $value ) : $value;
 		}
 
@@ -236,7 +289,7 @@ class ResponseParser {
 	private function is_indexed_array( array $data ): bool {
 		$keys  = array_keys( $data );
 		$count = count( $keys );
-		for ( $i = 0; $i < $count; $i++ ) {
+		for ( $i = 0; $i < $count; $i ++ ) {
 			if ( $keys[ $i ] !== $i ) {
 				return false;
 			}
