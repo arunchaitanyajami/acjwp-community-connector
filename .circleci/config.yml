@@ -23,10 +23,10 @@ jobs:
             composer validate
             composer install --no-dev -o
       - run:
-        name: Node Dependency
-        command: |
-          npm install
-          npm run build
+          name: Node Dependency
+          command: |
+            npm install
+            npm run build
       - persist_to_workspace:
           root: .
           paths:
