@@ -33,23 +33,23 @@ const Edit = ({}) => {
 
     const ErrorToast = () => {
         return (<ToastContainer
-                className="p-3"
-                position={'top-end'}
-                style={{zIndex: 1}}
-            >
-                <Toast onClose={() => setIsError(false)}>
-                    <Toast.Header>
-                        <strong className="me-auto">Error</strong>
-                    </Toast.Header>
-                    <Toast.Body>
-                        Unable to Fetch data from the end point,<br/>
-                        It might be of 2 reasons,<br/>
-                        1. Endpoint Not available or<br/>
-                        2. Provided endpoint is not a data source.<br/>
-                        or Missing some configuration.<br/>
-                    </Toast.Body>
-                </Toast>
-            </ToastContainer>);
+            className="p-3"
+            position={'top-end'}
+            style={{zIndex: 1}}
+        >
+            <Toast onClose={() => setIsError(false)}>
+                <Toast.Header>
+                    <strong className="me-auto">Error</strong>
+                </Toast.Header>
+                <Toast.Body>
+                    Unable to Fetch data from the end point,<br/>
+                    It might be of 2 reasons,<br/>
+                    1. Endpoint Not available or<br/>
+                    2. Provided endpoint is not a data source.<br/>
+                    or Missing some configuration.<br/>
+                </Toast.Body>
+            </Toast>
+        </ToastContainer>);
     }
 
     const fetchRoutes = () => {
@@ -66,7 +66,7 @@ const Edit = ({}) => {
         setIsError(false);
         findPositionalArguments(selectedRoute);
         setRouteKeys([]);
-        apiFetch({path: selectedRoute + "/reports/?skeleton=1&skeleton_type=1" }).then((data) => {
+        apiFetch({path: selectedRoute + "/reports/?skeleton=1&skeleton_type=1"}).then((data) => {
             setRouteKeys(data);
         }, (error) => {
             setIsError(true);
@@ -83,9 +83,9 @@ const Edit = ({}) => {
         fetchRoutes();
     }, [])
 
-    Object.entries(routeKeys).map(( value , key) => {
+    Object.entries(routeKeys).map((value, key) => {
 
-        console.log( value[1] )
+        console.log(value[1])
 
     })
 
@@ -105,11 +105,11 @@ const Edit = ({}) => {
                         disabled={isLoading}
                         onClick={!isLoading ? handleClick : null}
                     >
-                        {isLoading ? 'Loading…' : buttonText }
+                        {isLoading ? 'Loading…' : buttonText}
                     </Button>
                 </Stack>
             </Col>
-            <Col md={12} style={{ marginTop: '30px' }}>
+            <Col md={12} style={{marginTop: '30px'}}>
                 <Table striped bordered hover>
                     <thead>
                     <tr>
@@ -121,8 +121,8 @@ const Edit = ({}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {routeKeys && Object.entries(routeKeys).map(( value , key) => {
-                        return <tr key={value[0]} >
+                    {routeKeys && Object.entries(routeKeys).map((value, key) => {
+                        return <tr key={value[0]}>
                             <td>{value[0]}</td>
                             <td>
                                 <InputGroup size="sm" className="mb-3">
@@ -131,17 +131,17 @@ const Edit = ({}) => {
                                         aria-describedby="inputGroup-sizing-sm"
                                         placeholder={`Name for ${value[0]}`}
                                         id={`${value[0]}-name`}
-                                        defaultValue={ value[1]['name'] }
+                                        defaultValue={value[1]['name']}
                                     />
                                 </InputGroup>
                             </td>
                             <td>
                                 <Form.Group className="mb-3" controlId={`${value[0]}.ControlTextarea`}>
-                                    <Form.Control as="textarea" rows={3} defaultValue={ value[1]['description'] }/>
+                                    <Form.Control as="textarea" rows={3} defaultValue={value[1]['description']}/>
                                 </Form.Group>
                             </td>
                             <td>
-                                <Form.Select aria-label="Type" defaultValue={ value[1]['type'] }>
+                                <Form.Select aria-label="Type" defaultValue={value[1]['type']}>
                                     <option>Select Type</option>
                                     <option value="integer">Integer</option>
                                     <option value="url">URL</option>

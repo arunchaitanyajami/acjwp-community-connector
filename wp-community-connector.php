@@ -110,9 +110,7 @@ function acj_enqueue_scripts(): void {
 	wp_register_script( 'acj_menu_assets-js', ACJ_WPCC_DIR_URL . 'build/index.js', $asset_file['dependencies'], ACJ_WPCC_PLUGIN_VERSION, true );
 	wp_localize_script( 'acj_menu_assets-js', 'HhReferralBlocksEditorSettings', $block_settings );
 	wp_enqueue_script( 'acj_menu_assets-js' );
-	wp_enqueue_style( 'acj_menu_assets-global-css', ACJ_WPCC_DIR_URL . 'build/index.css', ACJ_WPCC_PLUGIN_VERSION );
+	wp_enqueue_style( 'acj_menu_assets-global-css', ACJ_WPCC_DIR_URL . 'build/index.css', array(), ACJ_WPCC_PLUGIN_VERSION );
 }
 
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\acj_enqueue_scripts' );
-
-

@@ -46,7 +46,7 @@ class ResponseParser {
 	 * Construct
 	 *
 	 * @param \WP_REST_Response $response The response object.
-	 * @param \WP_REST_Request $request Request object.
+	 * @param \WP_REST_Request  $request Request object.
 	 */
 	public function __construct( \WP_REST_Response $response, \WP_REST_Request $request ) {
 		$this->data    = $response->get_data();
@@ -111,19 +111,26 @@ class ResponseParser {
 		return $get_draft_data;
 	}
 
-	public function string_md5( string $string ): string {
-		return md5( $string );
+	/**
+	 * Convert string to MD5 HASH.
+	 *
+	 * @param string $key_string String to convert.
+	 *
+	 * @return string
+	 */
+	public function string_md5( string $key_string ): string {
+		return md5( $key_string );
 	}
 
 	/**
 	 * Get all keys from the WP route.
 	 *
-	 * @param array $data
-	 * @param array $response
+	 * @param array $data Data.
+	 * @param array $response Response.
 	 *
 	 * @return array
 	 */
-	private function fetch_skeleton( array $data, array &$response = [] ): array {
+	private function fetch_skeleton( array $data, array &$response = array() ): array {
 		$inline_data = $this->request->get_param( 'skeleton_type' ) ?? false;
 		foreach ( $data as $n_key => $n_data ) {
 			if ( is_array( $n_data ) ) {
@@ -141,7 +148,7 @@ class ResponseParser {
 	/**
 	 * Converted data.
 	 *
-	 * @param array $data Data Set.
+	 * @param array  $data Data Set.
 	 * @param string $prefix Data Prefix.
 	 *
 	 * @return array
@@ -215,9 +222,9 @@ class ResponseParser {
 	/**
 	 * Key validation.
 	 *
-	 * @param mixed $value Value.
+	 * @param mixed  $value Value.
 	 * @param string $key Key.
-	 * @param bool $process Convert values.
+	 * @param bool   $process Convert values.
 	 *
 	 * @return mixed
 	 */
@@ -289,7 +296,7 @@ class ResponseParser {
 	private function is_indexed_array( array $data ): bool {
 		$keys  = array_keys( $data );
 		$count = count( $keys );
-		for ( $i = 0; $i < $count; $i ++ ) {
+		for ( $i = 0; $i < $count; $i++ ) {
 			if ( $keys[ $i ] !== $i ) {
 				return false;
 			}
