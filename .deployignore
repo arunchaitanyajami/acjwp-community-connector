@@ -6,7 +6,6 @@ cypress.json
 phpcs.xml*
 phpunit.xml*
 docker
-docker-compose.yml
 .env*
 Dockerfile
 local
@@ -18,3 +17,7 @@ bin
 .github/
 LICENSE
 wp-cypress-config.php
+src/
+.eslintrc.json
+babel.config.js
+docker-compose.*
