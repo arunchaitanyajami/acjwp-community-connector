@@ -34,11 +34,11 @@
 	<!-- Remove particularly annoying and redundant WP sniffs -->
 	<rule ref="WordPress.PHP.YodaConditions.NotYoda">
 	    <exclude-pattern>inc/*</exclude-pattern>
-	    <exclude-pattern>wp-community-connector.php</exclude-pattern>
+	    <exclude-pattern>acjwp-community-connector.php</exclude-pattern>
 	</rule>
 	<rule ref="PSR12.Files.FileHeader.SpacingAfterBlock">
     	    <exclude-pattern>inc/*</exclude-pattern>
-	    <exclude-pattern>wp-community-connector.php</exclude-pattern>
+	    <exclude-pattern>acjwp-community-connector.php</exclude-pattern>
         </rule>
 
 	<!-- Check all PHP files in directory tree by default. -->
