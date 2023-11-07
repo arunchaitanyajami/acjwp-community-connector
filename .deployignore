@@ -18,6 +18,6 @@ bin
 LICENSE
 wp-cypress-config.php
 src/
-.eslintrc.json
+.eslintrc*
 babel.config.js
 docker-compose.*
