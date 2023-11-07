@@ -2,7 +2,7 @@
 /**
  * Setup Custom rest api.
  *
- * @package           wp-community-connector
+ * @package           acjwp-community-connector
  * @sub-package       WordPress
  */
 
