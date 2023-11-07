@@ -6,10 +6,10 @@
  * Requires PHP:      8.0
  * Version:           1.0.1
  * Author:            achaitanyajami
- * Text Domain:       WpCommunityConnector
+ * Text Domain:       acjwp-community-connector
  * Domain Path:       /language/
  *
- * @package           wp-community-connector
+ * @package           acjwp-community-connector
  * @sub-package       WordPress
  */
 

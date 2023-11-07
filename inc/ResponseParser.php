@@ -2,7 +2,7 @@
 /**
  * Response Parser.
  *
- * @package wp-community-connector
+ * @package acjwp-community-connector
  * @sub-package WordPress
  */
 
