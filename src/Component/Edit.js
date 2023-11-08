@@ -29,7 +29,21 @@ const Edit = ({}) => {
         return false;
     }
 
-    const handleClick = () => setLoading(true);
+    const handleClick = () => {
+        setLoading(true);
+        apiFetch({
+            path: '/wpcc/v1/routes/save',
+            method: 'POST',
+            data: {
+                route: selectedRoute + "/reports",
+                data: routeKeys
+            }
+        }).then((data) => {
+            setLoading(false);
+        }, (error) => {
+            setIsError(true);
+        })
+    };
 
     const ErrorToast = () => {
         return (<ToastContainer
@@ -83,12 +97,6 @@ const Edit = ({}) => {
         fetchRoutes();
     }, [])
 
-    Object.entries(routeKeys).map((value, key) => {
-
-        console.log(value[1])
-
-    })
-
     return <Container>
         {isError && <ErrorToast/>}
         <Row>
@@ -132,16 +140,32 @@ const Edit = ({}) => {
                                         placeholder={`Name for ${value[0]}`}
                                         id={`${value[0]}-name`}
                                         defaultValue={value[1]['name']}
+                                        onChange={(e) => {
+                                            value[1]['name'] = e.target.value;
+                                        }}
                                     />
                                 </InputGroup>
                             </td>
                             <td>
                                 <Form.Group className="mb-3" controlId={`${value[0]}.ControlTextarea`}>
-                                    <Form.Control as="textarea" rows={3} defaultValue={value[1]['description']}/>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={3}
+                                        defaultValue={value[1]['description']}
+                                        onChange={(e) => {
+                                            value[1]['description'] = e.target.value;
+                                        }}
+                                    />
                                 </Form.Group>
                             </td>
                             <td>
-                                <Form.Select aria-label="Type" defaultValue={value[1]['type']}>
+                                <Form.Select
+                                    aria-label="Type"
+                                    defaultValue={value[1]['type']}
+                                    onChange={(e) => {
+                                        value[1]['type'] = e.target.value;
+                                    }}
+                                >
                                     <option>Select Type</option>
                                     <option value="integer">Integer</option>
                                     <option value="url">URL</option>
