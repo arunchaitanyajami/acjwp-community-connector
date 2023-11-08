@@ -242,12 +242,6 @@ class ResponseParser {
 			return strtotime( $value ) !== false ? strtotime( $value ) : $value;
 		}
 
-		$get_options = get_option( $this->cache_key, array() );
-		if ( ! empty( $get_options ) ) {
-			print_r( $get_options );
-			exit();
-		}
-
 		$return = array(
 			'name'        => $this->get_name( $key ),
 			'description' => $this->get_description( $key ),
