@@ -14,6 +14,13 @@ namespace Acj\Wpcc\RestApi;
 class Route {
 
 	/**
+	 * Response cache time.
+	 *
+	 * @var int
+	 */
+	private int $cache_time = MINUTE_IN_SECONDS;
+
+	/**
 	 * Route namespace.
 	 *
 	 * @var string
@@ -39,8 +46,19 @@ class Route {
 			$this->name_space,
 			'routes',
 			array(
-				'methods'  => 'GET',
-				'callback' => array( $this, 'callback' ),
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_routes' ),
+				'permission_callback' => '__return_true',
+			)
+		);
+
+		register_rest_route(
+			$this->name_space,
+			'routes/save',
+			array(
+				'methods'             => 'post',
+				'callback'            => array( $this, 'save_config' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 	}
@@ -50,7 +68,7 @@ class Route {
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function callback(): \WP_REST_Response {
+	public function get_routes(): \WP_REST_Response {
 		$routes = rest_get_server()->get_routes();
 		$list   = array();
 		foreach ( $routes as $route => $args ) {
@@ -152,5 +170,41 @@ class Route {
 	 */
 	public function check_permission(): bool {
 		return false;
+	}
+
+	/**
+	 * Save Configuration.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function save_config( \WP_REST_Request $request ): \WP_REST_Response {
+		$data  = $request->get_param( 'data' );
+		$route = $request->get_param( 'route' );
+		$key   = $this->string_md5( $route );
+
+		update_option( $key, $data );
+		delete_transient( $key );
+		set_transient( $key, $data, $this->cache_time );
+
+		return rest_ensure_response(
+			array(
+				'route' => $route,
+				'data'  => $data,
+				'key'   => $key,
+			)
+		);
+	}
+
+	/**
+	 * Convert string to MD5 HASH.
+	 *
+	 * @param string $key_string String to convert.
+	 *
+	 * @return string
+	 */
+	public function string_md5( string $key_string ): string {
+		return md5( $key_string );
 	}
 }

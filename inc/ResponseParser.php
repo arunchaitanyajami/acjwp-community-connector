@@ -39,7 +39,14 @@ class ResponseParser {
 	 *
 	 * @var int
 	 */
-	private int $cache_time = MINUTE_IN_SECONDS;
+	private int $cache_time = HOUR_IN_SECONDS;
+
+	/**
+	 * Response cache key.
+	 *
+	 * @var string
+	 */
+	private string $cache_key;
 
 
 	/**
@@ -71,11 +78,13 @@ class ResponseParser {
 			return $this->data;
 		}
 
-		$url         = add_query_arg( $this->request->get_params(), $this->request->get_route() );
-		$cache_key   = $this->string_md5( $url );
-		$cached_data = get_transient( $cache_key );
-		if ( $cached_data ) {
-			return $cached_data;
+		$cache_key       = $this->string_md5( $this->request->get_route() );
+		$this->cache_key = $cache_key;
+		$cached_data     = get_transient( $this->cache_key ) ?: array(); //@phpcs:ignore
+		$options_data    = get_option( $this->cache_key, array() );
+		$cached_info     = array_merge( $cached_data, $options_data );
+		if ( $cached_info ) {
+			return $cached_info;
 		}
 
 		$data = $this->data;
@@ -95,18 +104,18 @@ class ResponseParser {
 
 		if ( $this->request->get_param( 'skeleton' ) ) {
 			$skeleton_data = $this->fetch_skeleton( $get_draft_data );
-			set_transient( $cache_key, $skeleton_data, $this->cache_time );
+			set_transient( $this->cache_key, $skeleton_data, $this->cache_time );
 
 			return $skeleton_data;
 		}
 
 		if ( ! $this->is_indexed_array( $this->data ) ) {
-			set_transient( $cache_key, $get_draft_data[0], $this->cache_time );
+			set_transient( $this->cache_key, $get_draft_data[0], $this->cache_time );
 
 			return $get_draft_data[0];
 		}
 
-		set_transient( $cache_key, $get_draft_data, $this->cache_time );
+		set_transient( $this->cache_key, $get_draft_data, $this->cache_time );
 
 		return $get_draft_data;
 	}
