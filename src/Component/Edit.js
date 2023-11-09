@@ -125,11 +125,12 @@ const Edit = ({}) => {
                         <th>Name</th>
                         <th>Description</th>
                         <th>Type</th>
-                        {/*<th>Aggregation</th>*/}
+                        <th>Aggregation</th>
                     </tr>
                     </thead>
                     <tbody>
                     {routeKeys && Object.entries(routeKeys).map((value, key) => {
+
                         return <tr key={value[0]}>
                             <td>{value[0]}</td>
                             <td>
@@ -150,7 +151,7 @@ const Edit = ({}) => {
                                 <Form.Group className="mb-3" controlId={`${value[0]}.ControlTextarea`}>
                                     <Form.Control
                                         as="textarea"
-                                        rows={3}
+                                        rows={1}
                                         defaultValue={value[1]['description']}
                                         onChange={(e) => {
                                             value[1]['description'] = e.target.value;
@@ -167,13 +168,73 @@ const Edit = ({}) => {
                                     }}
                                 >
                                     <option>Select Type</option>
-                                    <option value="integer">Integer</option>
-                                    <option value="url">URL</option>
-                                    <option value="string">String</option>
-                                    <option value="boolean">Boolean</option>
+                                    <option value="NUMBER">Number (14)</option>
+                                    <option value="PERCENT">Percentage (can be over 1.0)</option>
+                                    <option value="TEXT">TEXT</option>
+                                    <option value="BOOLEAN">BOOLEAN (true or false)</option>
+                                    <optgroup label="Link group">
+                                        <option value="URL">URL ("https://www.google.com")</option>
+                                        <option value="HYPERLINK">HYPERLINK (A link with a text label)</option>
+                                        <option value="IMAGE">Image (A URL of an image)</option>
+                                        <option value="IMAGELINK">IMAGE LINK (A link with an image label)</option>
+                                    </optgroup>
+                                    <optgroup label="DateTime group">
+                                        <option value="YEAR">YEAR ("2017")</option>
+                                        <option value="YEAR_QUARTER">YEAR QUARTER ("20171")</option>
+                                        <option value="YEAR_MONTH">YEAR MONTH ("201703")</option>
+                                        <option value="YEAR_WEEK">YEAR WEEK ("201707")</option>
+                                        <option value="YEAR_MONTH_DAY">YEAR MONTH DAY ("20170317")</option>
+                                        <option value="YEAR_MONTH_DAY_HOUR">YEAR MONTH DAY HOUR (2017031403)</option>
+                                        <option value="YEAR_MONTH_DAY_SECOND">YEAR MONTH DAY SECOND (20170314031545)
+                                        </option>
+                                        <option value="QUARTER">QUARTER (1, 2, 3, 4)</option>
+                                        <option value="MONTH">MONTH (03)</option>
+                                        <option value="WEEK">WEEK (07)</option>
+                                        <option value="MONTH_DAY">MONTH DAY (0317)</option>
+                                        <option value="DAY_OF_WEEK">DAY OF WEEK (A decimal number 0-6 with 0
+                                            representing Sunday)
+                                        </option>
+                                        <option value="DAY">DAY (17)</option>
+                                        <option value="HOUR">HOUR (02)</option>
+                                        <option value="MINUTE">MINUTE (12)</option>
+                                        <option value="DURATION">DURATION ( A Duration of Time in seconds )</option>
+                                    </optgroup>
+                                    <optgroup label="Geo Group">
+                                        <option value="COUNTRY">COUNTRY ("United States")</option>
+                                        <option value="COUNTRY_CODE">COUNTRY_CODE ("US")</option>
+                                        <option value="CONTINENT">CONTINENT ("Americas")</option>
+                                        <option value="CONTINENT_CODE">CONTINENT CODE ("019")</option>
+                                        <option value="SUB_CONTINENT">Sub Continent ("North America")</option>
+                                        <option value="SUB_CONTINENT_CODE">Sub Continent Code ("003")</option>
+                                        <option value="REGION">Region ("California")</option>
+                                        <option value="REGION_CODE">Region Code ("CA")</option>
+                                        <option value="CITY">City ("Mountain View")</option>
+                                        <option value="CITY_CODE">City Code ("1014044")</option>
+                                        <option value="METRO_CODE">Metro Code ("200807")</option>
+                                        <option value="LATITUDE_LONGITUDE">Latitude and Longitude ("51.5074, -0.1278")
+                                        </option>
+                                    </optgroup>
                                 </Form.Select>
                             </td>
-                            {/*<td></td>*/}
+                            <td>
+                                <Form.Select
+                                    aria-label="Aggregation"
+                                    defaultValue={value[1]['aggregation']}
+                                    onChange={(e) => {
+                                        value[1]['aggregation'] = e.target.value;
+                                    }}
+                                >
+                                    <option>Select Aggregation</option>
+                                    <option value="NONE">No aggregation</option>
+                                    <option value="AUTO">AUTO (Should be set for calculated fields involving an aggregation)</option>
+                                    <option value="SUM">SUM (The sum of the entries.)</option>
+                                    <option value="MIN">MIN (The minimum of the entries.)</option>
+                                    <option value="MAX">MAX (The maximum of the entries.)</option>
+                                    <option value="COUNT">COUNT (The number of entries.)</option>
+                                    <option value="COUNT_DISTINCT">COUNT_DISTINCT (The number of distinct entries.)</option>
+                                    <option value="AVG">AVG (The numerical average (mean) of the entries.)</option>
+                                </Form.Select>
+                            </td>
                         </tr>
                     })}
                     </tbody>
@@ -188,4 +249,4 @@ const Edit = ({}) => {
     </Container>
 }
 
-export default Edit;
+    export default Edit;

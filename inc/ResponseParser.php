@@ -39,7 +39,7 @@ class ResponseParser {
 	 *
 	 * @var int
 	 */
-	private int $cache_time = HOUR_IN_SECONDS;
+	private int $cache_time = MINUTE_IN_SECONDS;
 
 	/**
 	 * Response cache key.
@@ -85,8 +85,6 @@ class ResponseParser {
 		$cached_info     = array_merge( $cached_data, $options_data );
 		if ( $cached_info && $this->request->get_param( 'skeleton_type' ) ) {
 			return $cached_info;
-		} elseif ( ! empty( $cached_data ) ) {
-			return $cached_data;
 		}
 
 		$data = $this->data;
@@ -105,19 +103,12 @@ class ResponseParser {
 		}
 
 		if ( $this->request->get_param( 'skeleton' ) ) {
-			$skeleton_data = $this->fetch_skeleton( $get_draft_data );
-			set_transient( $this->cache_key, $skeleton_data, $this->cache_time );
-
-			return $skeleton_data;
+			return $this->fetch_skeleton( $get_draft_data );
 		}
 
 		if ( ! $this->is_indexed_array( $this->data ) ) {
-			set_transient( $this->cache_key, $get_draft_data[0], $this->cache_time );
-
 			return $get_draft_data[0];
 		}
-
-		set_transient( $this->cache_key, $get_draft_data, $this->cache_time );
 
 		return $get_draft_data;
 	}
@@ -249,18 +240,18 @@ class ResponseParser {
 			'description' => $this->get_description( $key ),
 			'formula'     => '',
 			'type'        => '',
-			'aggregation' => '',
+			'aggregation' => 'NONE',
 		);
 
 		/**
 		 * Check Data.
 		 */
-		if ( strtotime( $value ) !== false ) {
+		if ( $this->is_time( $value ) ) {
 			return array_merge(
 				$return,
 				array(
 					'value' => $value,
-					'type'  => 'DateTime',
+					'type'  => 'DURATION',
 				)
 			);
 		}
@@ -273,8 +264,9 @@ class ResponseParser {
 				return array_merge(
 					$return,
 					array(
-						'value' => $value,
-						'type'  => 'image',
+						'value'   => $value,
+						'type'    => 'IMAGE',
+						'formula' => "IMAGE(${value}, 'Alt Text')",
 					)
 				);
 			}
@@ -282,19 +274,49 @@ class ResponseParser {
 			return array_merge(
 				$return,
 				array(
-					'value' => $value,
-					'type'  => 'url',
+					'value'   => $value,
+					'type'    => 'URL',
+					'formula' => "HYPERLINK(${value}, 'Link Description')",
 				)
 			);
 		}
+
+		$type = 'integer' === getType( $value ) ? 'NUMBER' : getType( $value );
+		$type = 'string' === getType( $value ) ? 'TEXT' : $type;
+		$type = 'boolean' === getType( $value ) ? 'BOOLEAN' : $type;
 
 		return array_merge(
 			$return,
 			array(
 				'value' => $value,
-				'type'  => getType( $value ),
+				'type'  => $type,
 			)
 		);
+	}
+
+	/**
+	 * Check if is date.
+	 *
+	 * @param string $value value.
+	 *
+	 * @return bool
+	 */
+	private function is_time( string $value = '' ): bool {
+		// Check if the value is a valid timestamp.
+		if ( (int) $value == $value && strlen( $value ) === 10 ) {
+			return true;
+		} else {
+			// It's not a timestamp, try to parse it as a date.
+			$timestamp = strtotime( $value );
+
+			if ( $timestamp !== false ) {
+				// It's a valid date, you can use $timestamp.
+				return true;
+			} else {
+				// It's neither a valid timestamp nor a valid date.
+				return false;
+			}
+		}
 	}
 
 	/**
