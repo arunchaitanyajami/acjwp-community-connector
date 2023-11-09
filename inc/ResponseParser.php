@@ -83,8 +83,10 @@ class ResponseParser {
 		$cached_data     = get_transient( $this->cache_key ) ?: array(); //@phpcs:ignore
 		$options_data    = get_option( $this->cache_key, array() );
 		$cached_info     = array_merge( $cached_data, $options_data );
-		if ( $cached_info ) {
+		if ( $cached_info && $this->request->get_param( 'skeleton_type' ) ) {
 			return $cached_info;
+		} elseif ( ! empty( $cached_data ) ) {
+			return $cached_data;
 		}
 
 		$data = $this->data;
