@@ -1,16 +1,20 @@
-===  ===
-Contributors:      achaitanyajami
-Tags:              block
-Tested up to:      6.1
-Stable tag:        1.0.1
-
+=== AcjWpCommunityConnector Translate ===
+- Contributors:      achaitanyajami
+- Tags:              plugin
+- Tested up to:      6.0
+- Stable tag:        1.0.2
+- Requires at least: 6.0
+- Requires PHP: 8.0
+- Tested up to: 6.4.1
+- License: GPLv2 or later
+- License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+This is a long description. No limit, and you can use Markdown (as well as in the following sections).
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
+For backward compatibility, if this section is missing, the full length of the short description will be used, and
 Markdown parsed.
 
 == Installation ==
@@ -20,4 +24,4 @@ This section describes how to install the plugin and get it working.
 e.g.
 
 1. Upload the plugin files to the `/wp-content/plugins/wp-community-connector` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
+2. Activate the plugin through the 'Plugins' screen in WordPress
