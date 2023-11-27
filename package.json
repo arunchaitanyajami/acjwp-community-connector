@@ -35,8 +35,8 @@
   "devDependencies": {
     "@bigbite/wp-cypress": "^0.13.1",
     "@wordpress/api-fetch": "^6.40.0",
-    "@wordpress/compose": "^6.20.0",
-    "@wordpress/data": "^9.11.0",
+    "@wordpress/compose": "^6.23.0",
+    "@wordpress/data": "^9.16.0",
     "@wordpress/i18n": "^4.41.0",
     "@wordpress/prettier-config": "^2.24.0",
     "@wordpress/scripts": "^26.14.0",
