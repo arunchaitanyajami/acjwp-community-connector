@@ -303,7 +303,7 @@ class ResponseParser {
 	 */
 	private function is_time( string $value = '' ): bool {
 		// Check if the value is a valid timestamp.
-		if ( (int) $value == $value && strlen( $value ) === 10 ) {
+		if ( (int) $value === $value && strlen( $value ) === 10 ) {
 			return true;
 		} else {
 			// It's not a timestamp, try to parse it as a date.

@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/achaitanyajami/wp-community-connector
  * Requires WP:       6.0 ( Minimal )
  * Requires PHP:      8.0
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            achaitanyajami
  * Text Domain:       acjwp-community-connector
  * Domain Path:       /language/
@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'ACJ_WPCC_PLUGIN_VERSION', '1.0.2' );
+define( 'ACJ_WPCC_PLUGIN_VERSION', '1.0.3' );
 define( 'ACJ_WPCC_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ACJ_WPCC_DIR_URL', plugin_dir_url( __FILE__ ) );
 define( 'ACJ_WPCC_REPORTS_ENDPOINT', 'reports' );
@@ -65,8 +65,16 @@ add_filter(
  */
 add_filter(
 	'rest_request_after_callbacks',
-	function ( $response, $handler, $request ) {
+	function ( $response, $handler, \WP_REST_Request $request ) {
+		if ( ! str_contains( $request->get_route(), '/' . ACJ_WPCC_REPORTS_ENDPOINT ) ) {
+			return $response;
+		}
+
 		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		if ( is_admin() || 'edit' === $request->get_param( 'context' ) ) {
 			return $response;
 		}
 
