@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'acj/wp-community-connector',
+        'name' => 'acj/acjwp-community-connector',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'fd0c76ff0528d3158883167bf1ef5b78e319c5b4',
+        'reference' => 'acaea60af2f513cdd1db06e62f9ebb26875ead45',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => false,
     ),
     'versions' => array(
-        'acj/wp-community-connector' => array(
+        'acj/acjwp-community-connector' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'fd0c76ff0528d3158883167bf1ef5b78e319c5b4',
+            'reference' => 'acaea60af2f513cdd1db06e62f9ebb26875ead45',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
