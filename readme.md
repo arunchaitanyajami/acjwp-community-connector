@@ -1,5 +1,5 @@
 === AcjWpCommunityConnector Translate ===
-- Contributors:      achaitanyajami
+- Contributors:      achaitanyajami, arunchaitanyajami, iamarunchaitanyajami
 - Tags:              plugin
 - Stable tag:        1.0.4
 - Requires at least: 6.0
