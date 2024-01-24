@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/arunchaitanyajami/acjwp-community-connector
  * Requires WP:       6.0 ( Minimal )
  * Requires PHP:      8.0
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            achaitanyajami
  * Text Domain:       acjwp-community-connector
  * Domain Path:       /language/
@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'ACJ_WPCC_PLUGIN_VERSION', '1.0.3' );
+define( 'ACJ_WPCC_PLUGIN_VERSION', '1.0.4' );
 define( 'ACJ_WPCC_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ACJ_WPCC_DIR_URL', plugin_dir_url( __FILE__ ) );
 define( 'ACJ_WPCC_REPORTS_ENDPOINT', 'reports' );
