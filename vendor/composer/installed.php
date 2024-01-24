@@ -3,7 +3,7 @@
         'name' => 'acj/acjwp-community-connector',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6a3ce3ebcaf0551bae390ee73570d07d3dfbb702',
+        'reference' => '9be83c89d721c8dc5fb8928cf9c3fc0519245547',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'acj/acjwp-community-connector' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6a3ce3ebcaf0551bae390ee73570d07d3dfbb702',
+            'reference' => '9be83c89d721c8dc5fb8928cf9c3fc0519245547',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
