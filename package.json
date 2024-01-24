@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/achaitanyajami/wp-community-connector"
+    "url": "https://github.com/arunchaitanyajami/acjwp-community-connector"
   },
   "author": "achaitanyajami",
   "license": "GPL-2.0+",
   "bugs": {
-    "url": "https://github.com/achaitanyajami/wp-community-connector/issues"
+    "url": "https://github.com/arunchaitanyajami/acjwp-community-connector/issues"
   },
-  "homepage": "https://github.com/achaitanyajami/wp-community-connector#readme",
+  "homepage": "https://github.com/arunchaitanyajami/acjwp-community-connector#readme",
   "dependencies": {
     "bootstrap": "^5.3.2",
     "node-sass": "^7.0.3",

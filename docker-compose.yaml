@@ -14,7 +14,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
 
   wordpress:
-    image: wordpress:6.3-php8.0-apache
+    image: wordpress:6.4-php8.0-apache
     depends_on:
       - mysql
     ports:
@@ -22,7 +22,7 @@ services:
       - "443:443"
     volumes:
       - wp_data:/var/www/html/wp-content
-      - ./:/var/www/html/wp-content/plugins/wp-community-connector/
+      - ./:/var/www/html/wp-content/plugins/acjwp-community-connector/
     restart: always
     environment:
       WORDPRESS_DEBUG: 1
