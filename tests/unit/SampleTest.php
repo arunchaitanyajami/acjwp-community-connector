@@ -2,7 +2,7 @@
 /**
  * Sample test file.
  *
- * @package wp-community-connector
+ * @package acjwp-community-connector
  * @since   0.1.0
  */
 
@@ -12,7 +12,7 @@ namespace Acj\Wpcc\Tests\unit;
  * Functions test class.
  *
  * @since      1.0.0
- * @package    wp-community-connector
+ * @package    acjwp-community-connector
  * @author     achaitanyajami
  */
 class SampleTest extends TestCase {

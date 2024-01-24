@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       AJCWP Community Connector
- * Plugin URI:        https://github.com/achaitanyajami/wp-community-connector
+ * Plugin URI:        https://github.com/arunchaitanyajami/acjwp-community-connector
  * Requires WP:       6.0 ( Minimal )
  * Requires PHP:      8.0
  * Version:           1.0.3

@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package wp-community-connector
+ * @package acjwp-community-connector
  */
 
 if ( file_exists( __DIR__ . '/../vendor/autoload.php' ) ) {
