@@ -8,6 +8,7 @@ import ToastContainer from 'react-bootstrap/ToastContainer';
 import Table from 'react-bootstrap/Table';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Edit = ({}) => {
 
@@ -77,13 +78,16 @@ const Edit = ({}) => {
     }
 
     const fetchRouteKeys = () => {
+        setLoading(true);
         setIsError(false);
         findPositionalArguments(selectedRoute);
         setRouteKeys([]);
         apiFetch({path: selectedRoute + "/reports/?skeleton=1&skeleton_type=1"}).then((data) => {
             setRouteKeys(data);
+            setLoading(false);
         }, (error) => {
             setIsError(true);
+            setLoading(false);
         });
     }
 
@@ -96,6 +100,12 @@ const Edit = ({}) => {
     useEffect(() => {
         fetchRoutes();
     }, [])
+
+    const Loader = () => {
+        return <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    }
 
     return <Container>
         {isError && <ErrorToast/>}
@@ -129,7 +139,15 @@ const Edit = ({}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {routeKeys && Object.entries(routeKeys).map((value, key) => {
+                    {isLoading && <tr>
+                        <td>{isLoading && <Loader />}</td>
+                        <td>{isLoading && <Loader />}</td>
+                        <td>{isLoading && <Loader />}</td>
+                        <td>{isLoading && <Loader />}</td>
+                        <td>{isLoading && <Loader />}</td>
+                    </tr>
+                    }
+                    {!isLoading && routeKeys && Object.entries(routeKeys).map((value, key) => {
 
                         return <tr key={value[0]}>
                             <td>{value[0]}</td>
@@ -226,12 +244,15 @@ const Edit = ({}) => {
                                 >
                                     <option>Select Aggregation</option>
                                     <option value="NONE">No aggregation</option>
-                                    <option value="AUTO">AUTO (Should be set for calculated fields involving an aggregation)</option>
+                                    <option value="AUTO">AUTO (Should be set for calculated fields involving an
+                                        aggregation)
+                                    </option>
                                     <option value="SUM">SUM (The sum of the entries.)</option>
                                     <option value="MIN">MIN (The minimum of the entries.)</option>
                                     <option value="MAX">MAX (The maximum of the entries.)</option>
                                     <option value="COUNT">COUNT (The number of entries.)</option>
-                                    <option value="COUNT_DISTINCT">COUNT_DISTINCT (The number of distinct entries.)</option>
+                                    <option value="COUNT_DISTINCT">COUNT_DISTINCT (The number of distinct entries.)
+                                    </option>
                                     <option value="AVG">AVG (The numerical average (mean) of the entries.)</option>
                                 </Form.Select>
                             </td>
@@ -249,4 +270,4 @@ const Edit = ({}) => {
     </Container>
 }
 
-    export default Edit;
+export default Edit;
