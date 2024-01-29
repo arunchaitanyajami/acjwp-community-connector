@@ -18,7 +18,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
         with:
-          source_file: 'assets/.'
+          source_file: '/.'
           destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
           destination_branch: 'main'
           user_email: 'iamarunchaitanyajami@gmail.com'
