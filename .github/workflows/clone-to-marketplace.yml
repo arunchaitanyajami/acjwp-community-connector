@@ -1,0 +1,25 @@
+name: Push BUILD File to IAMARUNCHAITANYAJAMI
+
+on:
+  push:
+    branches: [ main-built ]
+
+jobs:
+  copy-file:
+    runs-on: ubuntu-latest
+    environment:
+      name: ACJ_ACCESS_TOKEN_GITHUB
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Push Theme File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: '/'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'arunchaitanyajami@gmail.com'
+          user_name: 'arunchaitanyajami'
