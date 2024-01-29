@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Push Theme File
+      - name: Push File
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
@@ -21,5 +21,5 @@ jobs:
           source_file: '.'
           destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
           destination_branch: 'main'
-          user_email: 'arunchaitanyajami@gmail.com'
-          user_name: 'arunchaitanyajami'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
