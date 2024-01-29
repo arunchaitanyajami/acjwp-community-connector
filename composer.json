@@ -36,19 +36,19 @@
     "yoast/phpunit-polyfills": "2.0.0",
     "symfony/dotenv": "5.4.x-dev",
     "phpcsstandards/phpcsutils": "^1.0",
-    "wordpress/wordpress": "6.3",
-    "wordpress/includes": "6.3"
+    "wordpress/wordpress": "6.4",
+    "wordpress/includes": "6.4"
   },
   "repositories": [
     {
       "type": "package",
       "package": {
         "name": "wordpress/includes",
-        "version": "6.3",
+        "version": "6.4",
         "source": {
           "url": "https://develop.svn.wordpress.org/",
           "type": "svn",
-          "reference": "branches/6.3/tests/phpunit/includes"
+          "reference": "branches/6.4/tests/phpunit/includes"
         }
       }
     },
@@ -56,11 +56,11 @@
       "type": "package",
       "package": {
         "name": "wordpress/wordpress",
-        "version": "6.3",
+        "version": "6.4",
         "source": {
           "url": "https://github.com/WordPress/WordPress",
           "type": "git",
-          "reference": "6.3-branch"
+          "reference": "6.4-branch"
         }
       }
     }
