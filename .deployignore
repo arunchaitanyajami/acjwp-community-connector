@@ -14,7 +14,6 @@ node_modules
 tests
 cypress/
 bin
-.github/
 LICENSE
 wp-cypress-config.php
 src/
