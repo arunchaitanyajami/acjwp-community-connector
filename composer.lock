@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "538bca06f512da7a82c8f2cea98b6168",
+    "content-hash": "46ec55a5e04ff36c2ad6d2f8900ba9d4",
     "packages": [
         {
             "name": "composer/installers",
@@ -5808,21 +5808,21 @@
         },
         {
             "name": "wordpress/includes",
-            "version": "6.3",
+            "version": "6.4",
             "source": {
                 "type": "svn",
                 "url": "https://develop.svn.wordpress.org/",
-                "reference": "branches/6.3/tests/phpunit/includes"
+                "reference": "branches/6.4/tests/phpunit/includes"
             },
             "type": "library"
         },
         {
             "name": "wordpress/wordpress",
-            "version": "6.3",
+            "version": "6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress",
-                "reference": "6.3-branch"
+                "reference": "6.4-branch"
             },
             "type": "library"
         },
@@ -5964,5 +5964,5 @@
         "php": "~8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
