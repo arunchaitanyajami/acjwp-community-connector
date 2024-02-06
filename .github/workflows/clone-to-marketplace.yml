@@ -67,7 +67,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
         with:
           source_file: 'acjwp-community-connector.php'
-          destination_folder: 'acjwp-community-connector.php'
+          destination_folder: './acjwp-community-connector.php'
           destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
           destination_branch: 'main'
           user_email: 'iamarunchaitanyajami@gmail.com'
@@ -79,7 +79,6 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
         with:
           source_file: 'composer.json'
-          destination_folder: 'composer.json'
           destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
           destination_branch: 'main'
           user_email: 'iamarunchaitanyajami@gmail.com'
@@ -91,7 +90,6 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
         with:
           source_file: 'package.json'
-          destination_folder: 'package.json'
           destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
           destination_branch: 'main'
           user_email: 'iamarunchaitanyajami@gmail.com'
@@ -103,7 +101,6 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
         with:
           source_file: 'package-lock.json'
-          destination_folder: 'package-lock.json'
           destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
           destination_branch: 'main'
           user_email: 'iamarunchaitanyajami@gmail.com'
@@ -115,7 +112,6 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
         with:
           source_file: 'readme.md'
-          destination_folder: 'readme.md'
           destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
           destination_branch: 'main'
           user_email: 'iamarunchaitanyajami@gmail.com'
