@@ -7,7 +7,7 @@ import { tokens, components } from 'react-ui/themes/light'
 
 
 // Render your React component instead.
-const root          = createRoot( document.getElementById( 'wpcc-ui' ) );
+const root          = createRoot( document.getElementById( 'acjwpcc-ui' ) );
 
 const Main = () => {
     return <ThemeProvider tokens={tokens} components={components}><RootContainer/></ThemeProvider>

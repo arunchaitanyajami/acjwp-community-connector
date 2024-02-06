@@ -16,7 +16,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="wp-community-connector"/>
+				<element value="acjwp-community-connector"/>
 			</property>
 		</properties>
 	</rule>

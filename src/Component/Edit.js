@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
+import {__} from '@wordpress/i18n';
 
 const Edit = ({}) => {
 
@@ -17,6 +18,7 @@ const Edit = ({}) => {
     const [selectedRoute, setSelectedRoute] = useState();
     const [isError, setIsError] = useState(false);
     const [isLoading, setLoading] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
     let buttonText = selectedRoute ? 'Save Data' : 'Select Route';
 
@@ -31,20 +33,38 @@ const Edit = ({}) => {
     }
 
     const handleClick = () => {
+        setIsSaved(false);
         setLoading(true);
         apiFetch({
             path: '/wpcc/v1/routes/save',
             method: 'POST',
             data: {
                 route: selectedRoute + "/reports",
-                data: routeKeys
+                data: routeKeys,
+                _nonce: window.AcjWpccBlocksEditorSettings.nonce_save
             }
         }).then((data) => {
+            setIsSaved(true);
             setLoading(false);
         }, (error) => {
             setIsError(true);
         })
     };
+
+    const SuccessToast = ({data}) => {
+        return (<ToastContainer
+            className="p-3"
+            position={'top-end'}
+            style={{zIndex: 1}}
+        >
+            <Toast bg={'success'} onClose={() => setIsSaved(false)}>
+                <Toast.Header>
+                    <strong className="me-auto">Data Saved</strong>
+                </Toast.Header>
+                <Toast.Body>{data}</Toast.Body>
+            </Toast>
+        </ToastContainer>);
+    }
 
     const ErrorToast = () => {
         return (<ToastContainer
@@ -52,7 +72,7 @@ const Edit = ({}) => {
             position={'top-end'}
             style={{zIndex: 1}}
         >
-            <Toast onClose={() => setIsError(false)}>
+            <Toast bg={'danger'} onClose={() => setIsError(false)}>
                 <Toast.Header>
                     <strong className="me-auto">Error</strong>
                 </Toast.Header>
@@ -70,7 +90,7 @@ const Edit = ({}) => {
     const fetchRoutes = () => {
         setIsError(false);
         setRoutes([]);
-        apiFetch({path: '/wpcc/v1/routes'}).then((data) => {
+        apiFetch({path: '/wpcc/v1/routes?_nonce=' + window.AcjWpccBlocksEditorSettings.nonce_get}).then((data) => {
             setRoutes(data);
         }, (error) => {
             setIsError(true);
@@ -103,17 +123,18 @@ const Edit = ({}) => {
 
     const Loader = () => {
         return <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <span className="visually-hidden">{__('Loading...', 'acjwp-community-connector')}</span>
         </Spinner>
     }
 
     return <Container>
         {isError && <ErrorToast/>}
+        {isSaved && <SuccessToast data={'Data Saved Successfully.'}/>}
         <Row>
             <Col md={12}>
                 <Stack direction="horizontal" gap={3}>
                     <Select onChange={(event) => setSelectedRoute(event.target.value)}>
-                        <option>Please select an Endpoint</option>
+                        <option>{__('Please select an Endpoint', 'acjwp-community-connector')}</option>
                         {routes && routes.map((name) => {
                             return <option key={name}>{name}</option>
                         })}
@@ -123,7 +144,7 @@ const Edit = ({}) => {
                         disabled={isLoading}
                         onClick={!isLoading ? handleClick : null}
                     >
-                        {isLoading ? 'Loading…' : buttonText}
+                        {isLoading ? __('Loading...', 'acjwp-community-connector') : __(buttonText, 'acjwp-community-connector')}
                     </Button>
                 </Stack>
             </Col>
@@ -131,26 +152,26 @@ const Edit = ({}) => {
                 <Table striped bordered hover>
                     <thead>
                     <tr>
-                        <th>#id</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th>Aggregation</th>
+                        <th>{__('#id', 'acjwp-community-connector')}</th>
+                        <th>{__('Name', 'acjwp-community-connector')}</th>
+                        <th>{__('Description', 'acjwp-community-connector')}</th>
+                        <th>{__('Type', 'acjwp-community-connector')}</th>
+                        <th>{__('Aggregation', 'acjwp-community-connector')}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {isLoading && <tr>
-                        <td>{isLoading && <Loader />}</td>
-                        <td>{isLoading && <Loader />}</td>
-                        <td>{isLoading && <Loader />}</td>
-                        <td>{isLoading && <Loader />}</td>
-                        <td>{isLoading && <Loader />}</td>
+                        <td>{isLoading && <Loader/>}</td>
+                        <td>{isLoading && <Loader/>}</td>
+                        <td>{isLoading && <Loader/>}</td>
+                        <td>{isLoading && <Loader/>}</td>
+                        <td>{isLoading && <Loader/>}</td>
                     </tr>
                     }
                     {!isLoading && routeKeys && Object.entries(routeKeys).map((value, key) => {
 
                         return <tr key={value[0]}>
-                            <td>{value[0]}</td>
+                            <td>{__(value[0], 'acjwp-community-connector')}</td>
                             <td>
                                 <InputGroup size="sm" className="mb-3">
                                     <Form.Control
@@ -262,11 +283,7 @@ const Edit = ({}) => {
                 </Table>
             </Col>
         </Row>
-        <Row className={'wpcc-rest-keys'}>
-            <Col>
-
-            </Col>
-        </Row>
+        <Row className={'wpcc-rest-keys'}><Col></Col></Row>
     </Container>
 }
 
