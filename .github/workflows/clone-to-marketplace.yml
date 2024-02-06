@@ -25,3 +25,99 @@ jobs:
           user_email: 'iamarunchaitanyajami@gmail.com'
           user_name: 'iamarunchaitanyajami'
           use_rsync: true
+      - name: Push INC File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'inc/.'
+          destination_folder: 'inc/'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
+      - name: Push Build File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'build/.'
+          destination_folder: 'build/'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
+      - name: Push Vendor Folder
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'vendor/.'
+          destination_folder: 'vendor/'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
+      - name: Push Plugin Main File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'acjwp-community-connector.php'
+          destination_folder: 'acjwp-community-connector.php'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
+      - name: Push Composer Main File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'composer.json'
+          destination_folder: 'composer.json'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
+      - name: Push Package Main File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'package.json'
+          destination_folder: 'package.json'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
+      - name: Push Package Lock File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'package-lock.json'
+          destination_folder: 'package-lock.json'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
+      - name: Push Read.Me File
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ACJ_ACCESS_TOKEN_GITHUB }}
+        with:
+          source_file: 'readme.md'
+          destination_folder: 'readme.md'
+          destination_repo: 'iamarunchaitanyajami/acjwp-community-connector'
+          destination_branch: 'main'
+          user_email: 'iamarunchaitanyajami@gmail.com'
+          user_name: 'iamarunchaitanyajami'
+          use_rsync: true
