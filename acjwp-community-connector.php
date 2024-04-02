@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-$reports_route = apply_filters('acj_wpcc_reports_enpoint_route', 'reports' );
+$reports_route = apply_filters( 'acj_wpcc_reports_enpoint_route', 'reports' );
 
 define( 'ACJ_WPCC_PLUGIN_VERSION', '1.0.7' );
 define( 'ACJ_WPCC_DIR_PATH', plugin_dir_path( __FILE__ ) );
