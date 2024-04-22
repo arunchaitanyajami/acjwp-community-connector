@@ -102,7 +102,7 @@ const Edit = ({}) => {
         setIsError(false);
         findPositionalArguments(selectedRoute);
         setRouteKeys([]);
-        apiFetch({path: selectedRoute + "/reports/?skeleton=1&skeleton_type=1"}).then((data) => {
+        apiFetch({path: selectedRoute + "/" + window.AcjWpccBlocksEditorSettings.route_endpoint + "/?skeleton=1&skeleton_type=1"}).then((data) => {
             setRouteKeys(data);
             setLoading(false);
         }, (error) => {

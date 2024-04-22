@@ -3,6 +3,9 @@
   "plugins": [
     "jsdoc"
   ],
+  "parserOptions": {
+    "sourceType": "script"
+  },
   "rules": {
     "jsdoc/check-access": 0, // Recommended
     "jsdoc/check-alignment": 0, // Recommended
