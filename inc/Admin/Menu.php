@@ -35,8 +35,8 @@ class Menu {
 	 */
 	public function menu_page(): void {
 		add_menu_page(
-			__( 'ACJWPCC', 'acjwp-community-connector' ),
-			__( 'ACJWPCC', 'acjwp-community-connector' ),
+			__( 'Looker Studio Connector', 'acjwp-community-connector' ),
+			__( 'Looker Studio Connector', 'acjwp-community-connector' ),
 			'manage_options',
 			'ACJWPCC',
 			array( $this, 'callback' ),
@@ -51,6 +51,10 @@ class Menu {
 	 * @return void
 	 */
 	public function callback(): void {
-		printf( '<div id="acjwpcc-ui">%s</div>', esc_attr( __( 'Testing', 'acjwp-community-connector' ) ) );
+		printf(
+			'<div class="wrap"><h1 class="wp-heading-inline">%s</h1><div id="acjwpcc-ui">%s</div></div>',
+			esc_attr( __( 'Looker Studio Connector', 'acjwp-community-connector' ) ),
+			esc_attr( __( 'Testing', 'acjwp-community-connector' ) )
+		);
 	}
 }

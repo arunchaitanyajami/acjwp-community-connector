@@ -1,7 +1,13 @@
-#wpcc-ui{
-  padding: 30px;
+#acjwpcc-ui{
+  padding: 30px 0 30px 0;
 
   .wpcc-rest-keys{
     padding: 30px;
+  }
+
+  .bg-success {
+    .toast-body {
+      color: #ffffff !important;
+    }
   }
 }

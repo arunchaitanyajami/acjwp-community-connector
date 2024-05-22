@@ -15,12 +15,12 @@ const Edit = ({}) => {
 
     const [routes, setRoutes] = useState([]);
     const [routeKeys, setRouteKeys] = useState([]);
-    const [selectedRoute, setSelectedRoute] = useState();
+    const [selectedRoute, setSelectedRoute] = useState('');
     const [isError, setIsError] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
 
-    let buttonText = selectedRoute ? 'Save Data' : 'Select Route';
+    let buttonText = selectedRoute && Object.entries(routeKeys).length ? 'Save Data' : 'Select Route';
 
     const findPositionalArguments = (inputString) => {
         const regex = /(\?P<parent>\[\\d]\+)|(\?P<id>\[\\d]\+)|(\?P<status>\[\\w-]+)|(\?P<taxonomy>\[\\w-]+)/g;
@@ -127,7 +127,7 @@ const Edit = ({}) => {
         </Spinner>
     }
 
-    return <Container>
+    return <Container fluid={true}>
         {isError && <ErrorToast/>}
         {isSaved && <SuccessToast data={'Data Saved Successfully.'}/>}
         <Row>
@@ -142,7 +142,7 @@ const Edit = ({}) => {
                     <Button
                         variant="secondary"
                         disabled={isLoading}
-                        onClick={!isLoading ? handleClick : null}
+                        onClick={!isLoading && Object.entries(routeKeys).length > 0 ? handleClick : null}
                     >
                         {isLoading ? __('Loading...', 'acjwp-community-connector') : __(buttonText, 'acjwp-community-connector')}
                     </Button>

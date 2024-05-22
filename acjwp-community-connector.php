@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/arunchaitanyajami/acjwp-community-connector
  * Requires WP:       6.0 ( Minimal )
  * Requires PHP:      8.0
- * Version:           1.0.8
+ * Version:           1.0.9
  * Author:            achaitanyajami
  * Text Domain:       acjwp-community-connector
  * Domain Path:       /language/
@@ -31,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 $reports_route = apply_filters( 'acj_wpcc_reports_endpoint_route', 'reports' );
 
-define( 'ACJ_WPCC_PLUGIN_VERSION', '1.0.8' );
+define( 'ACJ_WPCC_PLUGIN_VERSION', '1.0.9' );
 define( 'ACJ_WPCC_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ACJ_WPCC_DIR_URL', plugin_dir_url( __FILE__ ) );
 define( 'ACJ_WPCC_REPORTS_ENDPOINT', $reports_route );
