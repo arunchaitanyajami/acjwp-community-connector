@@ -40,7 +40,7 @@ class Menu {
 			'manage_options',
 			'ACJWPCC',
 			array( $this, 'callback' ),
-			ACJ_WPCC_DIR_URL . '/assets/menu-logo.jpg',
+			ACJ_WPCC_DIR_URL . '/assets/looker-icon-2.svg',
 			6
 		);
 	}
@@ -52,7 +52,8 @@ class Menu {
 	 */
 	public function callback(): void {
 		printf(
-			'<div class="wrap"><h1 class="wp-heading-inline">%s</h1><div id="acjwpcc-ui">%s</div></div>',
+			'<div class="wrap"><h1 class="wp-heading-inline"><img src="%s" alt="Looker Studio Connector" />%s</h1><div id="acjwpcc-ui">%s</div></div>',
+			esc_html( ACJ_WPCC_DIR_URL . '/assets/looker-icon.svg' ),
 			esc_attr( __( 'Looker Studio Connector', 'acjwp-community-connector' ) ),
 			esc_attr( __( 'Testing', 'acjwp-community-connector' ) )
 		);
